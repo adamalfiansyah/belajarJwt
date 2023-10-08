@@ -54,12 +54,11 @@ class ProfileController {
       //update status last userAccess
       const userAccess = await UserAccess.findOneAndUpdate(
         {
-          _id: req.jwt._id,
-          status: "active",
+          _id: req.params.userAccessId,
+          statusLogin: true,
         },
         {
-          type: "logout",
-          status: "expired",
+          statusLogin: false,
         },
         { new: true }
       );

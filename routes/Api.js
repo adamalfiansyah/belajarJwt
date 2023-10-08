@@ -14,7 +14,7 @@ router.post("/logout", [JwtAuth()], AuthController.logout);
 //Profile
 router.get("/profiles/user-access", [JwtAuth()], ProfileController.userAccess);
 router.get("/profiles/log-login", [JwtAuth()], ProfileController.logLogin);
-router.get(
+router.post(
   "/profiles/remote-logout/:userAccessId",
   [JwtAuth()],
   ProfileController.remoteLogout
