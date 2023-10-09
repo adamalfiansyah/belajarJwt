@@ -69,8 +69,6 @@ class ProfileController {
         throw { message: "jwt expired" };
       }
 
-      // console.log(userAccess.sessionId);
-
       //update status login to false
       const setTokenExpired = await UserAccess.updateMany(
         {
@@ -81,8 +79,6 @@ class ProfileController {
         },
         { new: true }
       );
-
-      console.log(setTokenExpired);
 
       return res.status(200).json({
         status: true,
