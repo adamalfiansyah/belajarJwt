@@ -51,13 +51,14 @@ class ProfileController {
 
   async remoteLogout(req, res) {
     try {
-      //update status last userAccess
+      //update status login to false
       const userAccess = await UserAccess.findOneAndUpdate(
         {
           _id: req.params.userAccessId,
           statusLogin: true,
         },
         {
+          statusToken: false,
           statusLogin: false,
         },
         { new: true }
@@ -67,6 +68,21 @@ class ProfileController {
       if (!userAccess) {
         throw { message: "jwt expired" };
       }
+
+      // console.log(userAccess.sessionId);
+
+      //update status login to false
+      const setTokenExpired = await UserAccess.updateMany(
+        {
+          sessionId: userAccess.sessionId,
+        },
+        {
+          statusToken: false,
+        },
+        { new: true }
+      );
+
+      console.log(setTokenExpired);
 
       return res.status(200).json({
         status: true,

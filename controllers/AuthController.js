@@ -56,7 +56,7 @@ class AuthController {
         userId: user._id,
         sessionId: sessionId,
         type: "login",
-        statusToken: "active",
+        statusToken: true,
         statusLogin: true,
         userAgent: req.headers["user-agent"],
       }).save();
@@ -113,7 +113,7 @@ class AuthController {
         userId: user._id,
         sessionId: sessionId,
         type: "login",
-        statusToken: "active",
+        statusToken: true,
         statusLogin: true,
         userAgent: req.headers["user-agent"],
       }).save();
@@ -155,9 +155,9 @@ class AuthController {
       const userAccess = await UserAccess.findOneAndUpdate(
         {
           _id: jwtVerified._id,
-          statusToken: "active",
+          statusToken: true,
         },
-        { statusToken: "expired" },
+        { statusToken: false },
         { new: true }
       );
 
@@ -171,7 +171,7 @@ class AuthController {
         userId: userAccess.userId,
         sessionId: userAccess.sessionId,
         type: "refresh-token",
-        statusToken: "active",
+        statusToken: true,
         userAgent: req.headers["user-agent"],
       }).save();
 
@@ -207,10 +207,10 @@ class AuthController {
       const userAccess = await UserAccess.findOneAndUpdate(
         {
           _id: req.jwt._id,
-          statusToken: "active",
+          statusToken: true,
         },
         {
-          statusToken: "expired",
+          statusToken: false,
         },
         { new: true }
       );

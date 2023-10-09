@@ -18,7 +18,7 @@ const JwtAuth = () => {
           //get UserAccess
           const userAccess = await UserAccess.findOne({
             _id: jwtVerified._id,
-            statusToken: "active",
+            statusToken: true,
           });
 
           if (!userAccess) {

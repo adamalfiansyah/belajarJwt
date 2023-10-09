@@ -22,10 +22,7 @@ const Schema = new Mongoose.Schema(
       required: true,
     },
     statusToken: {
-      type: String,
-      enum: ["active", "expired"],
-      default: "active",
-      required: true,
+      type: Boolean,
     },
     statusLogin: {
       type: Boolean,
