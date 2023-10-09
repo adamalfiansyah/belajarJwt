@@ -151,6 +151,16 @@ class AuthController {
         env.JWT_REFRESH_TOKEN_SECRET
       );
 
+      //if token from other device then push logout
+      const checkUserAccess = await UserAccess.findOne({
+        _id: jwtVerified._id,
+        userAgent: req.headers["user-agent"],
+      });
+
+      if (!checkUserAccess) {
+        throw { message: "TOKEN_FROM_OTHER_DEVICES" };
+      }
+
       //update status last userAccess
       const userAccess = await UserAccess.findOneAndUpdate(
         {

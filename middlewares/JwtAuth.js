@@ -20,9 +20,12 @@ const JwtAuth = () => {
             _id: jwtVerified._id,
             statusToken: true,
           });
-
           if (!userAccess) {
-            throw "TOKEN_IS_NOT_VALID";
+            throw { message: "TOKEN_IS_NOT_VALID" };
+          }
+
+          if (userAccess.userAgent != req.headers["user-agent"]) {
+            throw { message: "TOKEN_FROM_OTHER_DEVICES" };
           }
 
           //add user_id to jwt, for backend only
@@ -32,7 +35,7 @@ const JwtAuth = () => {
           next();
         }
       } else {
-        throw { message: { name: "TOKEN_REQUIRED" } };
+        throw { message: "TOKEN_REQUIRED" };
       }
     } catch (err) {
       if (err.message == "jwt expired") {
